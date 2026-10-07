@@ -1,0 +1,35 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "SixConcyclic.six_concyclic_fieldCriterion",
+    "SixConcyclic.at_most_six_concyclic_fieldCriterion",
+    "SixConcyclic.at_most_six_spherical_spanning_fieldCriterion",
+    "SixConcyclic.at_most_five_spherical_fieldCriterion",
+    "SixConcyclic.algebraic_spherical_fieldCriterion",
+    "SixConcyclic.fieldCriterion_spherical",
+    "SixConcyclic.algebraic_fieldCriterion_iff_spherical",
+    "SixConcyclic.at_most_six_spherical_ramsey_of_sufficiency",
+    "SixConcyclic.at_most_six_circle_points_ramsey_of_sufficiency",
+    "SixConcyclic.algebraic_spherical_ramsey_of_sufficiency",
+    "SixConcyclic.algebraic_ramsey_iff_spherical_of_classification"
+  ],
+  "definition_names": [
+    "SixConcyclic.Space",
+    "SixConcyclic.Congruent",
+    "SixConcyclic.Ramsey",
+    "SixConcyclic.coordinateField",
+    "SixConcyclic.Coeff",
+    "SixConcyclic.TensorRing",
+    "SixConcyclic.coordinate",
+    "SixConcyclic.augmented",
+    "SixConcyclic.multiply",
+    "SixConcyclic.FieldCriterion"
+  ],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

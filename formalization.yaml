@@ -1,0 +1,331 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "Six concyclic points satisfy the Euclidean Ramsey tensor criterion, as do every spanning spherical set of at most six points and every spherical set with algebraic coordinates; given the classification's sufficiency half, every spherical set of at most six points and every spanning algebraic spherical set is Ramsey"
+  description: >-
+    A Lean 4 development around the tensor criterion of the classification of finite Euclidean
+    Ramsey configurations (openai/math, family 172). With the criterion's definitions restated
+    character for character from that project's challenge file: every set of six distinct points on
+    a circle satisfies the criterion, by an explicit certificate (the product of the two bilinear
+    forms through the first three and the last three points of a homogeneous parametrisation of the
+    circle, scaled and conjugated by the parametrisation); every set of at most six concyclic points,
+    every spherical set of at most six points that affinely spans its space, and every spherical set
+    of at most five points in any dimension satisfy it, by an adjugate lift of an F-rational sphere
+    through isolating quadrics; every spherical set with algebraic coordinates satisfies it, of any
+    size, by the separability idempotent of F tensor F; the criterion always implies sphericity, so
+    for algebraic coordinates it is exactly sphericity. Given the sufficiency half of the
+    classification as an explicit hypothesis (quantified as the source states its Theorem 1.1),
+    every spherical set of at most six points is Ramsey and every spanning spherical set with
+    algebraic coordinates is Ramsey; given both halves, a spanning set with algebraic coordinates is
+    Ramsey if and only if it is spherical. The source proves the Ramsey property for at most five
+    circle points; six is the first case its method of independent quadratic rows cannot reach. With
+    the seven-point non-Ramsey circle set of A cyclic non-Ramsey heptagon (arXiv:2609.23327), the
+    least size of a non-Ramsey spherical set is seven, given the classification; the research note
+    in note/ states this and verifies by an exact derivation identity that the heptagon fails the
+    criterion. The classification is not proved here. The restated definitions and a few adapted
+    lemmas derive from Apache-2.0 work of OpenAI (NOTICE, LICENSES/Apache-2.0.txt); the rest is MIT.
+  authors: ["JD Jones"]
+  responsible_maintainers: ["JD Jones"]
+  license: "MIT"
+
+classification:
+  arxiv: ["math.CO", "math.MG"]
+  msc2020: ["05D10", "52C10"]
+
+sources:
+  - title: "A classification of finite Euclidean Ramsey configurations"
+    authors: ["OpenAI"]
+    id: "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-classification-of-finite-Euclidean-Ramsey-configurations-September-23-2026/paper.pdf"
+    type: "paper"
+    location: "openai/math, family 172, preprint dated 2026-09-23; Theorem 1.1, Proposition 7.3, Corollary 7.4"
+    relationship: "adapts"
+    author_endorsement: "not-contacted"
+    note: >-
+      Supplies the tensor criterion and the classification. The ten definitions of Challenge.lean are
+      restated character for character from the project's lean/ComparatorChallenges/EuclideanRamsey.lean
+      (Apache-2.0; see NOTICE), namespace changed; the hypotheses hsuff and hclass of the Ramsey
+      theorems are the sufficiency half and the full statement of Theorem 1.1, quantified as its
+      challenge statement OAI.EuclideanRamsey.classification is. This development proves the six-point
+      case its Corollary 7.4 leaves open and the algebraic-coordinates case; nothing of the source's
+      proof of the classification is formalized or relied on. A few lemmas adapt proofs from the
+      project's lean/OAI/Combinatorics/EuclideanRamsey/ tree, as their docstrings say.
+  - title: "A cyclic non-Ramsey heptagon"
+    authors: ["Dömötör Pálvölgyi"]
+    id: "arXiv:2609.23327"
+    type: "paper"
+    location: "https://arxiv.org/abs/2609.23327, Theorem 1"
+    relationship: "background"
+    author_endorsement: "not-contacted"
+    note: >-
+      The seven-point circle set that is not Ramsey, which makes seven the least size of a non-Ramsey
+      spherical set given the classification. Its moment identities are replayed exactly by
+      certificate 0002 in note/; nothing from it is formalized.
+  - title: "Euclidean Ramsey theorems. I"
+    authors: ["Paul Erdős", "Ronald L. Graham", "Peter Montgomery", "Bruce L. Rothschild", "Joel Spencer", "Ernst G. Straus"]
+    id: "doi:10.1016/0097-3165(73)90011-3"
+    type: "paper"
+    relationship: "background"
+    author_endorsement: "n/a"
+    note: >-
+      Journal of Combinatorial Theory, Series A 14 (1973) 341-363. Defines Euclidean Ramsey sets,
+      proves that every Ramsey set is spherical, and conjectures the converse. Background only.
+  - title: "Recent trends in Euclidean Ramsey theory"
+    authors: ["Ronald L. Graham"]
+    id: "doi:10.1016/0012-365X(94)00110-5"
+    type: "paper"
+    relationship: "background"
+    author_endorsement: "n/a"
+    note: >-
+      Discrete Mathematics 136 (1994) 119-127. Restates the spherical conjecture, which the main result
+      algebraic_spherical_ramsey_of_sufficiency establishes for spanning configurations with algebraic
+      coordinates, given the sufficiency half of the classification. Background only.
+  - title: "Permutation groups in Euclidean Ramsey theory"
+    authors: ["Igor Kříž"]
+    id: "doi:10.1090/S0002-9939-1991-1065087-9"
+    type: "paper"
+    relationship: "background"
+    author_endorsement: "not-contacted"
+    note: >-
+      Proceedings of the American Mathematical Society 112 (1991) 899-907. Sets with a soluble
+      transitive symmetry group, among them the regular hexagon, are Ramsey. Background only.
+  - title: "All trapezoids are Ramsey"
+    authors: ["Igor Kříž"]
+    id: "doi:10.1016/0012-365X(92)90660-8"
+    type: "paper"
+    relationship: "background"
+    author_endorsement: "not-contacted"
+    note: "Discrete Mathematics 108 (1992) 59-62. Background only."
+  - title: "A partition property of simplices in Euclidean space"
+    authors: ["Peter Frankl", "Vojtěch Rödl"]
+    id: "doi:10.1090/S0894-0347-1990-1020148-2"
+    type: "paper"
+    relationship: "background"
+    author_endorsement: "not-contacted"
+    note: "Journal of the American Mathematical Society 3 (1990) 1-7. Simplices are Ramsey. Background only."
+  - title: "All regular polytopes are Ramsey"
+    authors: ["Kristal Cantwell"]
+    id: "doi:10.1016/j.jcta.2006.08.001"
+    type: "paper"
+    relationship: "background"
+    author_endorsement: "not-contacted"
+    note: "Journal of Combinatorial Theory, Series A 114 (2007) 555-562. Background only."
+  - title: "Transitive sets in Euclidean Ramsey theory"
+    authors: ["Imre Leader", "Paul A. Russell", "Mark Walters"]
+    id: "doi:10.1016/j.jcta.2011.09.005"
+    type: "paper"
+    relationship: "background"
+    author_endorsement: "not-contacted"
+    note: >-
+      Journal of Combinatorial Theory, Series A 119 (2012) 382-396. The subtransitivity conjecture.
+      Background only.
+  - title: "Transitive sets and cyclic quadrilaterals"
+    authors: ["Imre Leader", "Paul A. Russell", "Mark Walters"]
+    id: "doi:10.4310/JOC.2011.v2.n3.a6"
+    type: "paper"
+    relationship: "background"
+    author_endorsement: "not-contacted"
+    note: >-
+      Journal of Combinatorics 2 (2011) 457-462. The status of cyclic quadrilaterals before 2026.
+      Background only.
+  - title: "The Lean 4 Theorem Prover and Programming Language"
+    authors: ["Leonardo de Moura", "Sebastian Ullrich"]
+    id: "doi:10.1007/978-3-030-79876-5_37"
+    type: "paper"
+    location: "Automated Deduction - CADE 28, Lecture Notes in Computer Science, Springer, 2021, 625-635"
+    relationship: "background"
+    author_endorsement: "n/a"
+    note: "The proof assistant. Cited in the note; nothing mathematical is taken from it."
+  - title: "The Lean mathematical library"
+    authors: ["The mathlib Community"]
+    id: "doi:10.1145/3372885.3373824"
+    type: "paper"
+    location: "Proceedings of the 9th ACM SIGPLAN International Conference on Certified Programs and Proofs (CPP 2020), 367-381"
+    relationship: "background"
+    author_endorsement: "n/a"
+    note: "The library the development imports (tag v4.35.0-rc2). Cited in the note."
+
+related_formalizations: []
+
+status:
+  scope: >-
+    Eleven compared declarations over ten compared definitions restated from the source's challenge
+    file. Unconditional: the tensor criterion for six concyclic points, for at most six concyclic
+    points, for at most six spherical points that affinely span their space, for at most five
+    spherical points in any dimension, and for every spherical set with algebraic coordinates; the
+    criterion implies sphericity; for algebraic coordinates the criterion is sphericity. Conditional
+    on the classification's sufficiency half, taken as an explicit hypothesis: every spherical set of
+    at most six points is Ramsey (any dimension, any affine span), every set of at most six circle
+    points is Ramsey, every spanning spherical set with algebraic coordinates is Ramsey; conditional
+    on both halves, a spanning set with algebraic coordinates is Ramsey if and only if it is
+    spherical. Not claimed: the classification; any Ramsey statement for seven or more points; the
+    criterion for six non-spanning spherical points outside the plane; the failure of the criterion
+    for the heptagon in Lean (on paper and by an exact checker in note/). The intentional
+    placeholders of Challenge.lean are excluded from proof counts; Solution.lean does not import
+    Challenge.lean.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: ["propext", "Classical.choice", "Quot.sound"]
+  main_results:
+    - declaration: "SixConcyclic.six_concyclic_fieldCriterion"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.at_most_six_concyclic_fieldCriterion"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.at_most_six_spherical_spanning_fieldCriterion"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.at_most_five_spherical_fieldCriterion"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.algebraic_spherical_fieldCriterion"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.fieldCriterion_spherical"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.algebraic_fieldCriterion_iff_spherical"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.at_most_six_spherical_ramsey_of_sufficiency"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.at_most_six_circle_points_ramsey_of_sufficiency"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.algebraic_spherical_ramsey_of_sufficiency"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.algebraic_ramsey_iff_spherical_of_classification"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Claude (Anthropic)"]
+      framework: "Claude Code with parallel subagents"
+      tool_setup: >-
+        The project was directed by its author. Claude (Anthropic) was used throughout; the theorems, their
+        proofs, the searches and the checkers arose in that process, and the repository was written by Claude. Lean v4.35.0-rc2 and Mathlib
+        v4.35.0-rc2 (commit 065356127b1dc0016f66b7283ce0ce2c4055aa55) are pinned by the committed manifest
+        and lake update is never run; there are no GitHub Actions workflows. There is no native_decide and
+        no enumeration beyond fin_cases over Fin 2, Fin 3 and Fin 6 and one interval_cases: the six-point
+        certificate is a set of polynomial identities closed by ring, field_simp and linear_combination in
+        an abstract field, the lifts are matrix algebra over the tensor ring, arithmetic side goals use
+        linarith, nlinarith and omega, and decide is used only for inequalities between literal elements
+        of Fin 6.
+  spend_usd: "not tracked"
+  notes: "See DISCLOSURE.md."
+
+fidelity:
+  divergences: >-
+    The ten definitions are the source's, character for character, in the namespace SixConcyclic.
+    Sphericity is stated as the source's circle corollary states it, as the existence of a centre and
+    a radius with dist (a i) c = r for every i. Algebraic coordinates are stated coordinatewise, as
+    IsAlgebraic Q (a i j) for every i and j. The hypotheses hsuff and hclass are the sufficiency half
+    and the full statement of the source's Theorem 1.1 with its hypotheses (at least two points,
+    positive dimension, injective, affine span the whole space); nothing about them is proved. The
+    Ramsey theorems for at most six spherical points carry no spanning hypothesis and allow the empty
+    and the one-point configuration, which the source's circle corollary excludes with 0 < s; the
+    algebraic Ramsey theorems carry the hypotheses of Theorem 1.1 because no congruent algebraic
+    spanning representative is constructed.
+
+review:
+  status: "self-assessed"
+  notes: >-
+    No independent human expert review and no source-author endorsement is claimed; AI agents
+    developed and cross-reviewed the proof, the statements were checked against the source's challenge
+    file, and VERIFICATION.md states what is checked and what is not. Mechanical correctness and
+    agreement of formal statements do not establish priority or significance.
+
+alignment:
+  namespace: "SixConcyclic"
+  statements:
+    - source: "This development; the case the source's Corollary 7.4 leaves open"
+      lean: "SixConcyclic.six_concyclic_fieldCriterion"
+      module: "Solution"
+      status: "proved"
+      note: "Every set of six distinct points on a circle satisfies FieldCriterion."
+    - source: "This development; the at-most-five case reproves the route of the source's Corollary 7.4 (Proposition 7.3) by its own isolators"
+      lean: "SixConcyclic.at_most_six_concyclic_fieldCriterion"
+      module: "Solution"
+      status: "proved"
+      note: "Every set of at most six distinct points on a circle satisfies FieldCriterion."
+    - source: "This development; the method of the source's Proposition 7.3 for at most five points and for six points spanning at least three dimensions, the six-point certificate in the plane"
+      lean: "SixConcyclic.at_most_six_spherical_spanning_fieldCriterion"
+      module: "Solution"
+      status: "proved"
+      note: >-
+        Every spherical set of at most six distinct points that affinely spans its space satisfies
+        FieldCriterion, in every dimension.
+    - source: "This development, generalising the source's Corollary 7.4 to every dimension"
+      lean: "SixConcyclic.at_most_five_spherical_fieldCriterion"
+      module: "Solution"
+      status: "proved"
+      note: "Every spherical set of at most five distinct points satisfies FieldCriterion, with no spanning hypothesis."
+    - source: "This development; the source does not state it"
+      lean: "SixConcyclic.algebraic_spherical_fieldCriterion"
+      module: "Solution"
+      status: "proved"
+      note: "Every spherical set whose coordinates are algebraic numbers satisfies FieldCriterion, whatever its size."
+    - source: "The source's Corollary 7.1, re-proved from the criterion alone"
+      lean: "SixConcyclic.fieldCriterion_spherical"
+      module: "Solution"
+      status: "proved"
+      note: "FieldCriterion implies the existence of a sphere through the points."
+    - source: "This development"
+      lean: "SixConcyclic.algebraic_fieldCriterion_iff_spherical"
+      module: "Solution"
+      status: "proved"
+      note: "For algebraic coordinates, FieldCriterion holds if and only if the points are spherical."
+    - source: "This development, conditional on the sufficiency half of the source's Theorem 1.1"
+      lean: "SixConcyclic.at_most_six_spherical_ramsey_of_sufficiency"
+      module: "Solution"
+      status: "proved"
+      note: >-
+        Given hsuff, every spherical set of at most six distinct points, in any dimension and with any
+        affine span, is Ramsey.
+    - source: "This development, conditional on the sufficiency half of the source's Theorem 1.1; the six-point analogue of the source's Corollary 7.4"
+      lean: "SixConcyclic.at_most_six_circle_points_ramsey_of_sufficiency"
+      module: "Solution"
+      status: "proved"
+      note: "Given hsuff, every set of at most six distinct points on a circle is Ramsey."
+    - source: "This development, conditional on the sufficiency half of the source's Theorem 1.1"
+      lean: "SixConcyclic.algebraic_spherical_ramsey_of_sufficiency"
+      module: "Solution"
+      status: "proved"
+      note: "Given hsuff, every spanning spherical set with algebraic coordinates is Ramsey."
+    - source: "This development, conditional on the source's Theorem 1.1"
+      lean: "SixConcyclic.algebraic_ramsey_iff_spherical_of_classification"
+      module: "Solution"
+      status: "proved"
+      note: "Given hclass, a spanning set with algebraic coordinates is Ramsey if and only if it is spherical."
+
+acknowledgements: >-
+  The classification paper for the criterion and its definitions; the heptagon paper for the
+  seven-point set; Lean, Mathlib, Comparator, lean4export, NanoDa, and the Palomar policy and
+  verifier projects. AI assistance is disclosed above and in DISCLOSURE.md.

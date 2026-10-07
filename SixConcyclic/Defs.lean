@@ -1,0 +1,61 @@
+module
+
+public import Mathlib.Analysis.InnerProductSpace.PiL2
+public import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
+public import Mathlib.RingTheory.TensorProduct.Maps
+public import Mathlib.LinearAlgebra.AffineSpace.AffineSubspace.Defs
+
+/-!
+# The compared definitions
+
+The ten definitions of `Challenge.lean`, repeated character for character so that the development
+can use them without importing the challenge environment. They are restated from
+`lean/ComparatorChallenges/EuclideanRamsey.lean` of openai/math at commit
+`adc7f1241b42e322a6451854ab7e4b4c146bf78a` (Apache-2.0; see `NOTICE`), with the namespace changed.
+-/
+
+@[expose] public section
+
+namespace SixConcyclic
+
+noncomputable section
+open scoped TensorProduct
+
+abbrev Space (d : ℕ) := EuclideanSpace ℝ (Fin d)
+
+def Congruent {s d D : ℕ} (a : Fin s → Space d) (b : Fin s → Space D) : Prop :=
+  ∀ i j, dist (b i) (b j) = dist (a i) (a j)
+
+def Ramsey {s d : ℕ} (a : Fin s → Space d) : Prop :=
+  ∀ r : ℕ, 2 ≤ r → ∃ D : ℕ, 1 ≤ D ∧
+    ∀ c : Space D → Fin r, ∃ b : Fin s → Space D,
+      Congruent a b ∧ ∃ k : Fin r, ∀ i, c (b i) = k
+
+def coordinateField {s d : ℕ} (a : Fin s → Space d) : IntermediateField ℚ ℝ :=
+  IntermediateField.adjoin ℚ (Set.range (fun ij : Fin s × Fin d => a ij.1 ij.2))
+
+abbrev Coeff {s d : ℕ} (a : Fin s → Space d) := ↥(coordinateField a)
+abbrev TensorRing {s d : ℕ} (a : Fin s → Space d) := Coeff a ⊗[ℚ] Coeff a
+
+def coordinate {s d : ℕ} (a : Fin s → Space d) (i : Fin s) (j : Fin d) : Coeff a :=
+  ⟨a i j, IntermediateField.subset_adjoin ℚ _ (Set.mem_range_self (i, j))⟩
+
+def augmented {s d : ℕ} (a : Fin s → Space d) (i : Fin s) : Option (Fin d) → Coeff a
+  | none => 1
+  | some j => coordinate a i j
+
+def multiply {s d : ℕ} (a : Fin s → Space d) : TensorRing a →ₐ[ℚ] Coeff a :=
+  Algebra.TensorProduct.lmul' ℚ
+
+def FieldCriterion {s d : ℕ} (a : Fin s → Space d) : Prop :=
+  ∃ P : Matrix (Option (Fin d)) (Option (Fin d)) (TensorRing a),
+    (∀ i : Fin s, ∑ α, ∑ β,
+      ((augmented a i α) ⊗ₜ[ℚ] (1 : Coeff a)) * P α β *
+      ((1 : Coeff a) ⊗ₜ[ℚ] (augmented a i β)) = 0) ∧
+    (∀ α β : Fin d, multiply a (P (some α) (some β)) = if α = β then 1 else 0)
+
+end
+
+end SixConcyclic
+
+end

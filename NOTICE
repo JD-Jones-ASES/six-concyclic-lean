@@ -1,0 +1,23 @@
+six-concyclic-lean is licensed under the MIT License (see LICENSE).
+
+Portions derive from openai/math (https://github.com/openai/math, commit
+adc7f1241b42e322a6451854ab7e4b4c146bf78a, 2026-10-06), Copyright OpenAI (the upstream repository
+names no other holder), licensed under the Apache License, Version 2.0. A copy of that license is in
+LICENSES/Apache-2.0.txt; it is also available at http://www.apache.org/licenses/LICENSE-2.0. The
+upstream repository carries no NOTICE file.
+
+What is derived:
+
+1. The ten definitions Space, Congruent, Ramsey, coordinateField, Coeff, TensorRing, coordinate,
+   augmented, multiply and FieldCriterion in Challenge.lean and SixConcyclic/Defs.lean are restated
+   character for character, with the namespace changed, from the upstream file
+   lean/ComparatorChallenges/EuclideanRamsey.lean.
+2. scripts/EuclideanRamsey.oai.lean is a copy of that upstream file with a three-line header added;
+   it is reference data for scripts/check_definitions.py and is not built.
+3. Lemmas whose docstrings say "adapts ... of openai/math ..." are modified from the upstream tree
+   lean/OAI/Combinatorics/EuclideanRamsey/ (the files named in each docstring). Those docstrings
+   are the modification notices.
+
+No other part of openai/math is included. Unless required by applicable law or agreed to in writing,
+the derived portions are distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied, as the Apache License states.

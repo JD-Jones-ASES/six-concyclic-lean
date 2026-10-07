@@ -1,14 +1,17 @@
+module
+
 import Solution
 import Lean.Util.CollectAxioms
 
 /-!
 # Axiom audit
 
-A plain (non-module) file, so that the private auxiliaries of the development are in the
-environment as well as its exported constants. Walks every constant whose name begins with
-`SixConcyclic.`, `_private.SixConcyclic.` or `_private.Solution.` (every declaration of this
-development and the private auxiliaries Lean generates for them; `Challenge.lean` is not
-imported), and collects the axioms each depends on. Anything outside `propext`,
+A module file importing `Solution` (not `Challenge.lean`). Walks every constant of the
+environment whose name begins with `SixConcyclic.`, `_private.SixConcyclic.` or
+`_private.Solution.` (the public declarations of this development; the private auxiliaries that
+Lean generates are not enumerated under the module system, but `collectAxioms` reaches every
+private constant a public proof refers to, including a private `axiom`), and collects the axioms
+each depends on. Anything outside `propext`,
 `Classical.choice`, `Quot.sound` is reported with `logError`, which fails `lake build`. The audit
 also fails if it matched fewer constants than the floor below (so a renamed namespace cannot make
 it pass vacuously) or if any of the fourteen compared theorems is missing from the environment.
@@ -30,8 +33,8 @@ run_cmd do
         unless allowed.contains ax do
           rejected := rejected + 1
           logError m!"Unexpected axiom dependency: {name} -> {ax}"
-  unless checked ≥ 450 do
-    logError m!"Axiom audit matched only {checked} project constants; expected at least 450"
+  unless checked ≥ 400 do
+    logError m!"Axiom audit matched only {checked} project constants; expected at least 400"
   for n in [`SixConcyclic.six_concyclic_fieldCriterion,
       `SixConcyclic.at_most_six_concyclic_fieldCriterion,
       `SixConcyclic.at_most_six_spherical_spanning_fieldCriterion,

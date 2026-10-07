@@ -53,24 +53,26 @@ python scripts/check_statements.py
 lake env python scripts/check_module_resolution.py
 ```
 
-The `Test` target is a plain (non-module) file, so that the private auxiliaries of the development are in its
-environment; it audits every constant whose name begins with `SixConcyclic.`, `_private.SixConcyclic.` or
-`_private.Solution.` (477 constants; the audit fails below 450), permits only `propext`, `Classical.choice` and
-`Quot.sound`, and fails if any of the fourteen compared theorems is missing. A placeholder in a proof compiles with
+The `Test` target imports `Solution` and audits every constant of its environment whose name begins with
+`SixConcyclic.`, `_private.SixConcyclic.` or `_private.Solution.` (412 constants, the public declarations of the
+development; the audit fails below 400), permits only `propext`, `Classical.choice` and `Quot.sound`, and fails if any
+of the fourteen compared theorems is missing. Under the module system the auxiliaries Lean generates for proofs are
+not enumerated, but `collectAxioms` follows every private constant a public proof refers to (control (f) below). A placeholder in a proof compiles with
 a warning; this audit is what fails the build. Challenge.lean intentionally contains fourteen proof placeholders;
 Solution.lean and the modules it imports contain none, and Solution.lean does not import Challenge.lean. The source
 guard rejects `sorry`, `sorryAx`, `admit`, `axiom`, `unsafe`, `partial`, `native_decide`, `implemented_by`,
 `extern`, `Lean.ofReduceBool` and the kernel-bypass options in SixConcyclic.lean, `SixConcyclic/`, Solution.lean,
 Test.lean and `Test/`, the same tokens except `sorry` in Challenge.lean, and any `debug.` option in the `[leanOptions]` table of lakefile.toml.
 `check_definitions.py` compares the ten definitions of Challenge.lean and SixConcyclic/Defs.lean, character for
-character, with `scripts/EuclideanRamsey.oai.lean`, a copy of OpenAI's challenge file at commit `adc7f124`;
+character, with `scripts/EuclideanRamsey-oai.txt`, a copy of OpenAI's challenge file at commit `adc7f124` (kept
+as text so that no unbuilt `.lean` file is in the repository);
 `check_statements.py` compares every theorem header of Challenge.lean with Solution.lean. Palomar's
 `scripts/core_notation_audit.lean` (an unmodified copy from github.com/PalomarRegistry/PalomarSubmission, fetched
 2026-10-07 UTC) prints all twenty-four compared declarations (fourteen theorems, ten definitions) with exit 0.
 
 Lean `v4.35.0-rc2` and Mathlib `v4.35.0-rc2` (commit `065356127b1dc0016f66b7283ce0ce2c4055aa55`) are pinned by
-the committed manifest; `lake update` is never run. Every file of the `SixConcyclic`, `Challenge` and `Solution`
-libraries carries a `module` header; the two `Test` files are plain files for the reason above. A build from an
+the committed manifest; `lake update` is never run. Every `.lean` file of the repository carries a `module` header
+(the reference copy of OpenAI's challenge file is kept as `.txt`). A build from an
 empty `.lake/build` after `lake exe cache get`, one target at a time, takes about three minutes on a 16-core, 16 GB
 PC (183 s for the four targets: the twenty development modules in 97 s, built in parallel by `lake build
 SixConcyclic`; the Challenge, which imports all of Mathlib, 57 s; Solution 10 s; the Test audit 19 s); each
@@ -98,10 +100,10 @@ twenty-three `sorryAx` dependencies (eight of them compared theorems: 1, 2, 3, 8
 `check-source.py` reports the line; (d) `hs : s ≤ 6`
 weakened to `s ≤ 7` in `at_most_six_concyclic_fieldCriterion_internal` — the case split fails; (e) `hs : s ≤ 5`
 weakened to `s ≤ 6` in `exists_isolators_of_le_five` — the two-plus-two split of the other points fails (`omega`);
-(f) a scratch module with a declared `axiom` and a `native_decide` lemma, at default (private) visibility and used by
-nothing, imported from Main — `check-source.py` flags both tokens, and the audit reports the private
-axiom and the auxiliary axiom `…native_decide.ax_1_1` that Lean generates for `native_decide` (not
-`Lean.ofReduceBool`), failing the build; (g) `hs : s ≤ 6` changed to `s ≤ 7` in Challenge.lean only —
+(f) a scratch module with a private `axiom` used by a public theorem, imported from the audit — `check-source.py`
+flags the token, and the audit reports the dependency under the axiom's `_private.` name, failing the build (in the
+first version, with the audit a plain file, the same control also covered an unused private `axiom` and a
+`native_decide` lemma, the latter reported through the auxiliary axiom `…native_decide.ax_1_1` that Lean generates); (g) `hs : s ≤ 6` changed to `s ≤ 7` in Challenge.lean only —
 `check_statements.py` reports `DIFFERS at_most_six_concyclic_fieldCriterion` while the definition check still passes,
 as it should; (h) `s ≤ m + 4` weakened to `s ≤ m + 5` in
 `spherical_fieldCriterion_of_card_le_finrank_add_four_internal` — the `omega` that feeds the rank argument

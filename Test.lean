@@ -1,1 +1,3 @@
-import Test.Axioms
+module
+
+public import Test.Axioms

@@ -1,6 +1,7 @@
 -- A copy of lean/ComparatorChallenges/EuclideanRamsey.lean of https://github.com/openai/math at commit
 -- adc7f1241b42e322a6451854ab7e4b4c146bf78a (Apache-2.0; see NOTICE and LICENSES/Apache-2.0.txt), with this
--- header added. It is reference data for scripts/check_definitions.py and is not built.
+-- header added. It is reference data for scripts/check_definitions.py and is not built (the .txt
+-- extension keeps it out of the Lean build).
 import Mathlib
 
 namespace OAI

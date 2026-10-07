@@ -12,7 +12,7 @@ What is derived:
    augmented, multiply and FieldCriterion in Challenge.lean and SixConcyclic/Defs.lean are restated
    character for character, with the namespace changed, from the upstream file
    lean/ComparatorChallenges/EuclideanRamsey.lean.
-2. scripts/EuclideanRamsey.oai.lean is a copy of that upstream file with a three-line header added;
+2. scripts/EuclideanRamsey-oai.txt is a copy of that upstream file with a header added;
    it is reference data for scripts/check_definitions.py and is not built.
 3. Lemmas whose docstrings say "adapts ... of openai/math ..." are modified from the upstream tree
    lean/OAI/Combinatorics/EuclideanRamsey/ (the files named in each docstring). Those docstrings

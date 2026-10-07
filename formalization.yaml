@@ -2,7 +2,7 @@
 version: "v0.4"
 
 project:
-  name: "Six concyclic points satisfy the Euclidean Ramsey tensor criterion, as does every spherical set of at most m + 4 points of affine dimension m and every spherical set with algebraic coordinates; given the classification's sufficiency half, these sets are Ramsey (the algebraic ones when they span their space)"
+  name: "Six concyclic points satisfy the Euclidean Ramsey tensor criterion, as does every spherical set of at most m + 4 points of affine dimension m and every algebraic spherical set; given the classification's sufficiency half, these sets are Ramsey (the algebraic ones when spanning)"
   description: >-
     A Lean 4 development around the tensor criterion of the classification of finite Euclidean
     Ramsey configurations (openai/math, family 172). With the criterion's definitions restated
@@ -65,7 +65,7 @@ sources:
     authors: ["JD Jones"]
     id: "note/main.tex and note/main.pdf in this repository (CC BY-SA 4.0)"
     type: "original-proof"
-    relationship: "formalizes"
+    relationship: "other"
     author_endorsement: "participated"
     note: >-
       The six-point certificate, the dimension theorem and the algebraic case are first presented in

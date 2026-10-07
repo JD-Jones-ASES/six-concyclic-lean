@@ -2,7 +2,7 @@
 """Check that the ten definitions of Challenge.lean and SixConcyclic/Defs.lean agree character for
 character with each other and with OpenAI's lean/ComparatorChallenges/EuclideanRamsey.lean at commit
 adc7f1241b42e322a6451854ab7e4b4c146bf78a, up to the namespace line. The reference file is read from
-the path given as the first argument (default: scripts/EuclideanRamsey.oai.lean) and is not part of
+the path given as the first argument (default: scripts/EuclideanRamsey-oai.txt) and is not part of
 the development. Exit status 0 means every definition block agrees."""
 
 from pathlib import Path
@@ -29,7 +29,7 @@ def blocks(text):
 
 
 def main():
-    ref_path = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "scripts" / "EuclideanRamsey.oai.lean"
+    ref_path = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "scripts" / "EuclideanRamsey-oai.txt"
     ref = blocks(ref_path.read_text(encoding="utf-8"))
     ok = True
     for rel in ("Challenge.lean", "SixConcyclic/Defs.lean"):

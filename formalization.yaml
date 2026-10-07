@@ -47,12 +47,14 @@ sources:
     id: "https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/preprints/A-classification-of-finite-Euclidean-Ramsey-configurations-September-23-2026/paper.pdf"
     type: "paper"
     location: "openai/math, family 172, preprint dated 2026-09-23; Theorem 1.1, Proposition 7.3, Corollary 7.4"
-    relationship: "adapts"
+    relationship: "other"
     author_endorsement: "not-contacted"
     note: >-
-      Supplies the tensor criterion and the classification. The ten definitions of Challenge.lean are
-      restated character for character from the project's lean/ComparatorChallenges/EuclideanRamsey.lean
-      (Apache-2.0; see NOTICE), namespace changed; the hypotheses hsuff and hclass of the Ramsey
+      Supplies the tensor criterion and the classification; the relationship is "other" because the
+      theorems proved here are not in the source (they are first presented in the research note below)
+      while the ten definitions of Challenge.lean are restated character for character from the
+      project's lean/ComparatorChallenges/EuclideanRamsey.lean (Apache-2.0; see NOTICE), namespace
+      changed, and a few lemmas adapt its proofs; the hypotheses hsuff and hclass of the Ramsey
       theorems are the sufficiency half and the full statement of Theorem 1.1, quantified as its
       challenge statement OAI.EuclideanRamsey.classification is. This development proves the six-point
       case its Corollary 7.4 leaves open, the dimension theorem and the algebraic-coordinates case;

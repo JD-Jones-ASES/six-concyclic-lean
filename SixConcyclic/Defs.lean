@@ -1,9 +1,6 @@
 module
 
-public import Mathlib.Analysis.InnerProductSpace.PiL2
-public import Mathlib.FieldTheory.IntermediateField.Adjoin.Defs
-public import Mathlib.RingTheory.TensorProduct.Maps
-public import Mathlib.LinearAlgebra.AffineSpace.AffineSubspace.Defs
+public import Mathlib
 
 /-!
 # The compared definitions
@@ -12,6 +9,9 @@ The ten definitions of `Challenge.lean`, repeated character for character so tha
 can use them without importing the challenge environment. They are restated from
 `lean/ComparatorChallenges/EuclideanRamsey.lean` of openai/math at commit
 `adc7f1241b42e322a6451854ab7e4b4c146bf78a` (Apache-2.0; see `NOTICE`), with the namespace changed.
+This module imports all of Mathlib, exactly as the challenge file does, so that the definitions
+elaborate to the same terms in both environments (instance resolution depends on the imports, and
+the registry's comparator demands identical constants).
 -/
 
 @[expose] public section

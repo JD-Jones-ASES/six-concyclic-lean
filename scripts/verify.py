@@ -7,8 +7,9 @@ In order: the pins (lean-toolchain and the Mathlib revision of lake-manifest.jso
 ones), the source guard, the definition comparison against OpenAI's challenge file, the statement
 comparison between Challenge.lean and Solution.lean, the exact certificates under note/, the Lean
 build of every target (including the Test audit, which fails on any axiom beyond propext,
-Classical.choice and Quot.sound), the module-resolution check, and Palomar's core-notation audit of
-the compared declarations. `--fetch-cache` runs `lake exe cache get` first (network); `--skip-build`
+Classical.choice and Quot.sound), the module-resolution check, the elaboration check of the compared
+definitions (printed with pp.all from the Challenge and from SixConcyclic.Defs, which must agree exactly,
+as the registry's comparator demands), and Palomar's core-notation audit of the compared declarations. `--fetch-cache` runs `lake exe cache get` first (network); `--skip-build`
 leaves out the four Lean steps. The last line is `VERIFY: PASS` or `VERIFY: FAIL`. Exit status 0 on
 PASS only.
 """
@@ -76,6 +77,27 @@ def check_module_resolution():
                 (result.stdout + result.stderr).strip().splitlines()[-1:][0] if (result.stdout + result.stderr).strip() else "")
 
 
+def check_definition_elaboration():
+    """The compared definitions, printed with pp.all from the Challenge and from the development's
+    definitions module, must agree exactly: the comparator judges the elaborated constants, which
+    depend on the imports through instance resolution."""
+    config = json.loads((ROOT / "comparator.json").read_text(encoding="utf-8"))
+    names = config["definition_names"]
+    scratch = ROOT / ".scratch"
+    scratch.mkdir(exist_ok=True)
+    outputs = []
+    for module in (config["challenge_module"], "SixConcyclic.Defs"):
+        path = scratch / f"verify_pp_{module.replace('.', '_')}.lean"
+        header = "import " + module + "\nset_option pp.all true\n"
+        path.write_text(header + "".join("#print " + n + "\n" for n in names), encoding="utf-8")
+        result = run(["lake", "env", "lean", str(path)], capture_output=True)
+        outputs.append((result.returncode, result.stdout))
+        path.unlink()
+    ok = all(rc == 0 for rc, _ in outputs) and outputs[0][1].strip() != "" and outputs[0][1] == outputs[1][1]
+    return step("definition elaboration (Challenge vs SixConcyclic.Defs, pp.all)", ok,
+                "identical" if ok else "the printed terms differ or a print failed")
+
+
 def check_notation_audit():
     config = json.loads((ROOT / "comparator.json").read_text(encoding="utf-8"))
     args = ["lake", "env", "lean", "--run", "scripts/core_notation_audit.lean", config["challenge_module"]]
@@ -108,6 +130,7 @@ def main():
             ok &= step("lake exe cache get", run(["lake", "exe", "cache", "get"]).returncode == 0)
         ok &= check_build()
         ok &= check_module_resolution()
+        ok &= check_definition_elaboration()
         ok &= check_notation_audit()
     print("VERIFY: PASS" if ok else "VERIFY: FAIL")
     return 0 if ok else 1

@@ -40,8 +40,10 @@ python scripts/verify.py --fetch-cache
 runs, in order: the pins (`lean-toolchain` and the Mathlib revision of `lake-manifest.json` are the committed ones),
 `scripts/check-source.py`, `scripts/check_definitions.py`, `scripts/check_statements.py`, the three exact certificates
 under `note/`, `lake build` of the four targets `SixConcyclic`, `Challenge`, `Solution`, `Test`,
-`lake env python scripts/check_module_resolution.py`, and Palomar's `scripts/core_notation_audit.lean` on the
-twenty-four compared declarations of `comparator.json`; the last line is `VERIFY: PASS` or `VERIFY: FAIL`.
+`lake env python scripts/check_module_resolution.py`, the elaboration check (every compared definition printed with
+`pp.all` from the Challenge and from `SixConcyclic.Defs`; the outputs must be identical), and Palomar's
+`scripts/core_notation_audit.lean` on the twenty-four compared declarations of `comparator.json`; the last line is
+`VERIFY: PASS` or `VERIFY: FAIL`.
 `--skip-build` leaves out the four Lean steps. The steps can also be run one by one:
 
 ```sh
@@ -72,11 +74,14 @@ as text so that no unbuilt `.lean` file is in the repository);
 
 Lean `v4.35.0-rc2` and Mathlib `v4.35.0-rc2` (commit `065356127b1dc0016f66b7283ce0ce2c4055aa55`) are pinned by
 the committed manifest; `lake update` is never run. Every `.lean` file of the repository carries a `module` header
-(the reference copy of OpenAI's challenge file is kept as `.txt`). A build from an
-empty `.lake/build` after `lake exe cache get`, one target at a time, takes about three minutes on a 16-core, 16 GB
-PC (183 s for the four targets: the twenty development modules in 97 s, built in parallel by `lake build
-SixConcyclic`; the Challenge, which imports all of Mathlib, 57 s; Solution 10 s; the Test audit 19 s); each
-development module takes 7–16 s on its own, most of it the Mathlib import.
+(the reference copy of OpenAI's challenge file is kept as `.txt`). `SixConcyclic/Defs.lean` imports all of Mathlib, as
+the challenge file does, so that the ten definitions elaborate to identical terms in both environments (instance
+resolution depends on the imports; with targeted imports the registry's comparator rejected `multiply`); printing
+each definition with `pp.all` from the Challenge and from `SixConcyclic.Defs` gives identical output. A build from an
+empty `.lake/build` after `lake exe cache get`, one target at a time, takes about four minutes on a 16-core, 16 GB
+PC (255 s for the four targets: the twenty development modules in 197 s, built in parallel by `lake build
+SixConcyclic`, every one of them loading all of Mathlib; then the Challenge 19 s, Solution 18 s, the Test audit
+21 s); each development module takes 20–60 s on its own, most of it the Mathlib import.
 
 ## The finite computations
 

@@ -105,7 +105,8 @@ theorem μ_descentMap {ι : Type*} (b : Basis ι (Coeff a) ℝ) (φ : Module.Dua
     rw [Finsupp.linearCombination_apply, Finsupp.mul_sum, map_finsuppSum]
     refine Finsupp.sum_congr fun δ _ => ?_
     rw [μ_tmul, mul_smul_comm, map_smul, smul_eq_mul, mul_comm]
-  | add z z' hz hz' => rw [map_add, map_add, hz, hz', map_add, map_add]
+  | add z z' hz hz' =>
+    rw [LinearMap.map_add, RingHom.map_add, hz, hz', ← LinearMap.map_add, ← RingHom.map_add]
 
 /-- A real certificate with spatial block `I` descends to the coordinate field. -/
 theorem fieldCriterion_of_realCert {s d : ℕ} (a : Fin s → Space d)

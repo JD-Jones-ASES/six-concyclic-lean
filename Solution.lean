@@ -1,11 +1,12 @@
 module
 
 public import SixConcyclic.Main
+public import SixConcyclic.Dimension
 
 /-!
 # The compared theorems
 
-The eleven theorems of `Challenge.lean`, restated character for character and proved from the
+The fourteen theorems of `Challenge.lean`, restated character for character and proved from the
 development. This file does not import `Challenge.lean`; the definitions it uses are those of
 `SixConcyclic/Defs.lean`, which repeats the challenge's definitions.
 -/
@@ -97,6 +98,31 @@ theorem algebraic_ramsey_iff_spherical_of_classification
     (hspan : affineSpan ℝ (Set.range a) = ⊤) (halg : ∀ i j, IsAlgebraic ℚ (a i j)) :
     Ramsey a ↔ ∃ c : Space d, ∃ r : ℝ, ∀ i, dist (a i) c = r :=
   algebraic_ramsey_iff_spherical_of_classification_internal hclass a hs hd ha hspan halg
+
+/-- The dimension theorem: every spherical set of at most `m + 4` distinct points, where
+`m` is the dimension of its affine span, satisfies the tensor criterion, in its own space and
+coordinate field. -/
+theorem spherical_fieldCriterion_of_card_le_finrank_add_four {s d : ℕ} (a : Fin s → Space d)
+    (ha : Function.Injective a) (hsphere : ∃ c : Space d, ∃ r : ℝ, ∀ i, dist (a i) c = r)
+    (hdim : s ≤ Module.finrank ℝ (vectorSpan ℝ (Set.range a)) + 4) : FieldCriterion a :=
+  spherical_fieldCriterion_of_card_le_finrank_add_four_internal a ha hsphere hdim
+
+/-- Every spherical set of at most six distinct points, in any dimension and with any affine
+span, satisfies the tensor criterion. -/
+theorem at_most_six_spherical_fieldCriterion {s d : ℕ} (a : Fin s → Space d) (hs : s ≤ 6)
+    (ha : Function.Injective a) (hsphere : ∃ c : Space d, ∃ r : ℝ, ∀ i, dist (a i) c = r) :
+    FieldCriterion a :=
+  at_most_six_spherical_fieldCriterion_internal a hs ha hsphere
+
+/-- Given the sufficiency half of the classification, every spherical set of at most `m + 4`
+distinct points, `m` the dimension of its affine span, is Ramsey. -/
+theorem spherical_ramsey_of_sufficiency_of_card_le_finrank_add_four
+    (hsuff : ∀ {s d : ℕ} (a : Fin s → Space d), 2 ≤ s → 1 ≤ d → Function.Injective a →
+      affineSpan ℝ (Set.range a) = ⊤ → FieldCriterion a → Ramsey a)
+    {s d : ℕ} (a : Fin s → Space d) (ha : Function.Injective a)
+    (hsphere : ∃ c : Space d, ∃ r : ℝ, ∀ i, dist (a i) c = r)
+    (hdim : s ≤ Module.finrank ℝ (vectorSpan ℝ (Set.range a)) + 4) : Ramsey a :=
+  spherical_ramsey_of_sufficiency_of_card_le_finrank_add_four_internal hsuff a ha hsphere hdim
 
 end
 

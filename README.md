@@ -11,54 +11,57 @@ every set of at most five points on a circle is Ramsey (Corollary 7.4); the seve
 points on a circle are the first case the paper's method (independent quadratic rows) cannot reach.
 
 With the ten definitions restated character for character from `lean/ComparatorChallenges/EuclideanRamsey.lean`
-of openai/math at commit `adc7f124` (Apache-2.0, see [NOTICE](NOTICE); namespace `SixConcyclic`), this
-repository proves:
+of openai/math at commit `adc7f124` (Apache-2.0, see [NOTICE](NOTICE); namespace `SixConcyclic`),
+[Challenge.lean](Challenge.lean) states fourteen theorems and [Solution.lean](Solution.lean) proves them; the
+table in [VERIFICATION.md](VERIFICATION.md) names each one. Unconditionally:
 
-- six distinct points on a circle satisfy the criterion — `six_concyclic_fieldCriterion`; at most six —
-  `at_most_six_concyclic_fieldCriterion`;
-- at most six spherical points that span their space, in any dimension — `at_most_six_spherical_spanning_fieldCriterion`;
-  at most five spherical points, any dimension, any span — `at_most_five_spherical_fieldCriterion`;
-- every spherical set with algebraic coordinates, of any size — `algebraic_spherical_fieldCriterion`; the
-  criterion always implies sphericity — `fieldCriterion_spherical`; so for algebraic coordinates the
-  criterion is exactly sphericity — `algebraic_fieldCriterion_iff_spherical`;
-- given the sufficiency half of the classification as an explicit hypothesis, every spherical set of at
-  most six points is Ramsey — `at_most_six_spherical_ramsey_of_sufficiency`,
-  `at_most_six_circle_points_ramsey_of_sufficiency` — and every spanning spherical set with algebraic
-  coordinates is Ramsey — `algebraic_spherical_ramsey_of_sufficiency`; given both halves, a spanning set with
-  algebraic coordinates is Ramsey if and only if it is spherical — `algebraic_ramsey_iff_spherical_of_classification`.
+- six distinct points on a circle satisfy the criterion (`six_concyclic_fieldCriterion`);
+- the dimension theorem: every spherical set of at most `m + 4` distinct points, `m` the dimension of its
+  affine span, satisfies the criterion in its own space and coordinate field
+  (`spherical_fieldCriterion_of_card_le_finrank_add_four`); so every spherical set of at most six points
+  does, in any dimension and with any affine span;
+- every spherical set with algebraic coordinates satisfies the criterion, the criterion implies sphericity,
+  and for algebraic coordinates the two are equivalent.
 
-The hypotheses `hsuff` and `hclass` are quantified exactly as the paper's Theorem 1.1 is in its challenge file
-(`OAI.EuclideanRamsey.classification`); they are not proved here. Given them, seven is the least size of a
-non-Ramsey spherical set (the heptagon fails the criterion, as the note shows by an exact derivation identity),
-and the spherical conjecture of Erdős, Graham, Montgomery, Rothschild, Spencer and Straus holds for configurations
-with algebraic coordinates (in Lean for spanning ones; the general case on paper in [note/](note/README.md)).
+Given the sufficiency half of the classification as an explicit hypothesis (`hsuff`, quantified exactly as the
+paper's Theorem 1.1 is in its challenge file, `OAI.EuclideanRamsey.classification`), every spherical set of at
+most six points, every spherical set of at most `m + 4` points, and every spanning spherical set with
+algebraic coordinates is Ramsey; given both halves (`hclass`), a spanning set with algebraic coordinates is
+Ramsey if and only if it is spherical. The hypotheses are not proved here. Given them, the spherical
+conjecture (asked by Erdős, Graham, Montgomery, Rothschild, Spencer and Straus in 1973, stated as a
+conjecture by Graham) holds for spanning configurations with algebraic coordinates, and seven is the least
+size of a non-Ramsey spherical set. On paper, in [note/](note/README.md): the bound `m + 4` is sharp for
+`m ≥ 2` (the heptagon with `m − 2` further points of its sphere fails the criterion and is not Ramsey), so
+`m + 5` is then the least size of a non-Ramsey spherical set of affine dimension `m`; and the algebraic case
+extends to non-spanning configurations.
 
-Not claimed: the classification itself, which is used only as a hypothesis; Ramsey statements for seven or
-more points; the criterion for six non-spanning spherical points outside the plane (their Ramsey property is
-covered through a spanning congruent copy); the heptagon's failure of the criterion in Lean (on paper and by
-an exact checker in `note/`).
+Not claimed: the classification itself; the criterion or the Ramsey property for arbitrary spherical sets of
+more than `m + 4` points (the algebraic theorems have no size bound); the heptagon's failure of the
+criterion in Lean, and hence the sharpness (on paper, the former also by an exact checker in `note/`).
 
-> As of 2026-10-07 (UTC), no statement that six concyclic points are Ramsey or satisfy the criterion, and no
-> statement of the criterion for algebraic configurations, was located in the classification paper or its
-> Lean tree, in arXiv:2609.23327 (whose appendix shows only that derivation identities cannot refute at most
-> six points), on arXiv, MathOverflow, erdosproblems.com (#174), the formal-conjectures repository, the Palomar
-> registry, Hexagon, or GitHub.
+> As of 2026-10-07 (UTC), no statement that six concyclic points are Ramsey or satisfy the criterion, no
+> statement of the criterion for algebraic configurations, and no positive bound depending on the dimension
+> beyond simplices (Frankl–Rödl, `d + 1` points) was located in the classification paper or its Lean tree,
+> in arXiv:2609.23327 (whose appendix, marked by its author as unverified output of a language model,
+> treats derivation certificates: none refutes at most six points, and its non-Ramsey constructions in
+> dimension `d` have `2d + 3` points for `d ≥ 2` or `C(d+2, 2)` points for `d ≥ 3`), on arXiv, MathOverflow,
+> erdosproblems.com (#174), the formal-conjectures repository, the Palomar registry, Hexagon, or GitHub.
+> The one-point extension theorems of 2026 ([arXiv:2608.09649](https://arxiv.org/abs/2608.09649),
+> [arXiv:2608.11736](https://arxiv.org/abs/2608.11736): a Ramsey set plus a point outside its affine hull
+> is Ramsey) are the nearest results; the extension lemma here is their analogue on the side of the criterion.
 
 Lean `v4.35.0-rc2` and Mathlib `v4.35.0-rc2` (commit `065356127b1dc0016f66b7283ce0ce2c4055aa55`) are pinned by
 the committed manifest; there are no GitHub Actions workflows.
 
 ```sh
-lake exe cache get
-lake build
-python scripts/check-source.py
-python scripts/check_definitions.py
-python scripts/check_statements.py
+python scripts/verify.py --fetch-cache
 ```
 
-[PROOF.md](PROOF.md) gives the mathematics with the Lean name of every step, [VERIFICATION.md](VERIFICATION.md)
-the checks and their limits, [DISCLOSURE.md](DISCLOSURE.md) the assistance statement.
-[Challenge.lean](Challenge.lean) states the eleven theorems; [Solution.lean](Solution.lean) proves them.
-[note/](note/README.md) holds the research note (CC BY-SA 4.0) and its exact certificates.
+runs every check (the pins, the source guard, the definition and statement comparisons, the exact
+certificates, the build with the axiom audit, the module-resolution check and Palomar's core-notation
+audit); [VERIFICATION.md](VERIFICATION.md) lists them and their limits. [PROOF.md](PROOF.md) gives the
+mathematics with the Lean name of every step, [DISCLOSURE.md](DISCLOSURE.md) the assistance statement, and
+[note/](note/README.md) the research note (CC BY-SA 4.0) with its exact certificates.
 
 License: [MIT](LICENSE); the restated definitions and a few adapted lemmas derive from Apache-2.0 work of OpenAI
 ([NOTICE](NOTICE), [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt)).

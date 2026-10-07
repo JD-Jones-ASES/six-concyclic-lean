@@ -12,7 +12,10 @@
     "SixConcyclic.at_most_six_spherical_ramsey_of_sufficiency",
     "SixConcyclic.at_most_six_circle_points_ramsey_of_sufficiency",
     "SixConcyclic.algebraic_spherical_ramsey_of_sufficiency",
-    "SixConcyclic.algebraic_ramsey_iff_spherical_of_classification"
+    "SixConcyclic.algebraic_ramsey_iff_spherical_of_classification",
+    "SixConcyclic.spherical_fieldCriterion_of_card_le_finrank_add_four",
+    "SixConcyclic.at_most_six_spherical_fieldCriterion",
+    "SixConcyclic.spherical_ramsey_of_sufficiency_of_card_le_finrank_add_four"
   ],
   "definition_names": [
     "SixConcyclic.Space",

@@ -13,9 +13,10 @@ public import SixConcyclic.Ramsey
 public import SixConcyclic.Transport
 
 /-!
-# The eleven theorems, assembled
+# The first eleven theorems, assembled
 
-Each compared theorem of `Challenge.lean` has an internal version here, proved from the modules:
+Eleven of the compared theorems of `Challenge.lean` have internal versions here (the three
+dimension theorems are in `Dimension.lean`), proved from the modules:
 the six-point certificate (`Assembly`), the adjugate lift with pairing or triple isolators
 (`Lift`, `Isolators`), the algebraic case (`Algebraic`), sphericity from the criterion (`Sphere`),
 and the Ramsey glue (`Ramsey`, `Transport`).

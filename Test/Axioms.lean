@@ -11,7 +11,7 @@ development and the private auxiliaries Lean generates for them; `Challenge.lean
 imported), and collects the axioms each depends on. Anything outside `propext`,
 `Classical.choice`, `Quot.sound` is reported with `logError`, which fails `lake build`. The audit
 also fails if it matched fewer constants than the floor below (so a renamed namespace cannot make
-it pass vacuously) or if any of the eleven compared theorems is missing from the environment.
+it pass vacuously) or if any of the fourteen compared theorems is missing from the environment.
 -/
 
 open Lean Elab Command in
@@ -30,8 +30,8 @@ run_cmd do
         unless allowed.contains ax do
           rejected := rejected + 1
           logError m!"Unexpected axiom dependency: {name} -> {ax}"
-  unless checked ≥ 250 do
-    logError m!"Axiom audit matched only {checked} project constants; expected at least 250"
+  unless checked ≥ 450 do
+    logError m!"Axiom audit matched only {checked} project constants; expected at least 450"
   for n in [`SixConcyclic.six_concyclic_fieldCriterion,
       `SixConcyclic.at_most_six_concyclic_fieldCriterion,
       `SixConcyclic.at_most_six_spherical_spanning_fieldCriterion,
@@ -42,7 +42,10 @@ run_cmd do
       `SixConcyclic.at_most_six_spherical_ramsey_of_sufficiency,
       `SixConcyclic.at_most_six_circle_points_ramsey_of_sufficiency,
       `SixConcyclic.algebraic_spherical_ramsey_of_sufficiency,
-      `SixConcyclic.algebraic_ramsey_iff_spherical_of_classification] do
+      `SixConcyclic.algebraic_ramsey_iff_spherical_of_classification,
+      `SixConcyclic.spherical_fieldCriterion_of_card_le_finrank_add_four,
+      `SixConcyclic.at_most_six_spherical_fieldCriterion,
+      `SixConcyclic.spherical_ramsey_of_sufficiency_of_card_le_finrank_add_four] do
     unless env.contains n do
       logError m!"Compared theorem is missing from the environment: {n}"
   logInfo m!"Audited {checked} project constants; unexpected axiom dependencies: {rejected}."

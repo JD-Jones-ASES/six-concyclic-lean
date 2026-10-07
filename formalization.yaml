@@ -2,29 +2,37 @@
 version: "v0.4"
 
 project:
-  name: "Six concyclic points satisfy the Euclidean Ramsey tensor criterion, as do every spanning spherical set of at most six points and every spherical set with algebraic coordinates; given the classification's sufficiency half, every spherical set of at most six points and every spanning algebraic spherical set is Ramsey"
+  name: "Six concyclic points satisfy the Euclidean Ramsey tensor criterion, as does every spherical set of at most m + 4 points of affine dimension m and every spherical set with algebraic coordinates; given the classification's sufficiency half, these sets are Ramsey (the algebraic ones when they span their space)"
   description: >-
     A Lean 4 development around the tensor criterion of the classification of finite Euclidean
     Ramsey configurations (openai/math, family 172). With the criterion's definitions restated
     character for character from that project's challenge file: every set of six distinct points on
     a circle satisfies the criterion, by an explicit certificate (the product of the two bilinear
     forms through the first three and the last three points of a homogeneous parametrisation of the
-    circle, scaled and conjugated by the parametrisation); every set of at most six concyclic points,
-    every spherical set of at most six points that affinely spans its space, and every spherical set
-    of at most five points in any dimension satisfy it, by an adjugate lift of an F-rational sphere
-    through isolating quadrics; every spherical set with algebraic coordinates satisfies it, of any
-    size, by the separability idempotent of F tensor F; the criterion always implies sphericity, so
-    for algebraic coordinates it is exactly sphericity. Given the sufficiency half of the
-    classification as an explicit hypothesis (quantified as the source states its Theorem 1.1),
-    every spherical set of at most six points is Ramsey and every spanning spherical set with
-    algebraic coordinates is Ramsey; given both halves, a spanning set with algebraic coordinates is
-    Ramsey if and only if it is spherical. The source proves the Ramsey property for at most five
-    circle points; six is the first case its method of independent quadratic rows cannot reach. With
-    the seven-point non-Ramsey circle set of A cyclic non-Ramsey heptagon (arXiv:2609.23327), the
-    least size of a non-Ramsey spherical set is seven, given the classification; the research note
-    in note/ states this and verifies by an exact derivation identity that the heptagon fails the
-    criterion. The classification is not proved here. The restated definitions and a few adapted
-    lemmas derive from Apache-2.0 work of OpenAI (NOTICE, LICENSES/Apache-2.0.txt); the rest is MIT.
+    circle, scaled and conjugated by the parametrisation); the sharp dimension theorem: every
+    spherical set of at most m + 4 distinct points, m the dimension of its affine span, satisfies the
+    criterion in its own space and coordinate field (either the augmented vectors admit real
+    isolating quadrics and the sphere lifts by the adjugate, or a dependence among them is supported
+    on six concyclic points while every other point adds a dimension, and the six-point certificate
+    is carried into the ambient space, symmetrised, adjusted to the common sphere, extended point by
+    point and descended from R tensor R to F tensor F), so every spherical set of at most six points
+    satisfies it in any dimension with any affine span; every spherical set with algebraic
+    coordinates satisfies it, of any size, by the separability idempotent of F tensor F; the
+    criterion always implies sphericity, so for algebraic coordinates it is exactly sphericity.
+    Given the sufficiency half of the classification as an explicit hypothesis (quantified as the
+    source states its Theorem 1.1), every spherical set of at most six points, every spherical set
+    of at most m + 4 points and every spanning spherical set with algebraic coordinates is Ramsey;
+    given both halves, a spanning set with algebraic coordinates is Ramsey if and only if it is
+    spherical. The source proves the Ramsey property for at most five circle points; six is the
+    first case its method of independent quadratic rows cannot reach. With the seven-point
+    non-Ramsey circle set of A cyclic non-Ramsey heptagon (arXiv:2609.23327), the least size of a
+    non-Ramsey spherical set is seven, given the classification, and, for m at least 2, m + 5 the
+    least size of one with affine span of dimension m, since the heptagon with m - 2 further sphere
+    points fails the criterion and is not Ramsey; the research note in note/ states this, verifies by
+    an exact derivation identity that the heptagon fails the criterion, and proves the sharpness on
+    paper (nothing in Lean says that a set fails the criterion).
+    The classification is not proved here. The restated definitions and a few adapted lemmas derive
+    from Apache-2.0 work of OpenAI (NOTICE, LICENSES/Apache-2.0.txt); the rest is MIT.
   authors: ["JD Jones"]
   responsible_maintainers: ["JD Jones"]
   license: "MIT"
@@ -47,9 +55,25 @@ sources:
       (Apache-2.0; see NOTICE), namespace changed; the hypotheses hsuff and hclass of the Ramsey
       theorems are the sufficiency half and the full statement of Theorem 1.1, quantified as its
       challenge statement OAI.EuclideanRamsey.classification is. This development proves the six-point
-      case its Corollary 7.4 leaves open and the algebraic-coordinates case; nothing of the source's
-      proof of the classification is formalized or relied on. A few lemmas adapt proofs from the
-      project's lean/OAI/Combinatorics/EuclideanRamsey/ tree, as their docstrings say.
+      case its Corollary 7.4 leaves open, the dimension theorem and the algebraic-coordinates case;
+      nothing of the source's proof of the classification is formalized or relied on. Its Proposition
+      7.3 (independent quadratic rows) is one branch of the dimension theorem, and the congruence
+      invariance and field descent of its Section 2 are formalized here in the form of the real
+      tensor ring. A few lemmas adapt proofs from the project's lean/OAI/Combinatorics/EuclideanRamsey/
+      tree, as their docstrings say.
+  - title: "Six concyclic points satisfy the Euclidean Ramsey tensor criterion (the research note of this repository)"
+    authors: ["JD Jones"]
+    id: "note/main.tex and note/main.pdf in this repository (CC BY-SA 4.0)"
+    type: "original-proof"
+    relationship: "formalizes"
+    author_endorsement: "participated"
+    note: >-
+      The six-point certificate, the dimension theorem and the algebraic case are first presented in
+      this note, and the Lean development formalizes them; the statement of the dimension theorem and
+      an outline of its proof were proposed by a GPT model (see DISCLOSURE.md). The note also carries
+      the parts that are on paper only: the heptagon's failure of the criterion (replayed exactly by
+      certificate 0002), the sharpness of the dimension bound for m at least 2, and the extension of
+      the algebraic case to non-spanning configurations.
   - title: "A cyclic non-Ramsey heptagon"
     authors: ["Dömötör Pálvölgyi"]
     id: "arXiv:2609.23327"
@@ -59,17 +83,36 @@ sources:
     author_endorsement: "not-contacted"
     note: >-
       The seven-point circle set that is not Ramsey, which makes seven the least size of a non-Ramsey
-      spherical set given the classification. Its moment identities are replayed exactly by
-      certificate 0002 in note/; nothing from it is formalized.
+      spherical set given the classification, and with d - 2 further sphere points gives the sharpness
+      example of d + 5 points in dimension d. Its moment identities are replayed exactly by certificate
+      0002 in note/; nothing from it is formalized. Its appendix (marked by the author as unverified
+      output of a language model) is not relied on.
+  - title: "A pyramid with a Ramsey base is Ramsey"
+    authors: ["Kenneth Moore"]
+    id: "arXiv:2608.09649"
+    type: "paper"
+    relationship: "background"
+    author_endorsement: "not-contacted"
+    note: >-
+      A Ramsey set plus a point outside its affine hull is Ramsey. The extension lemma realCert_insert
+      is the analogue on the side of the criterion, with the sphere carried along; nothing from the
+      paper is used.
+  - title: "One-point extensions of Euclidean Ramsey sets"
+    authors: ["Mostafa Mirabi"]
+    id: "arXiv:2608.11736"
+    type: "paper"
+    relationship: "background"
+    author_endorsement: "not-contacted"
+    note: "The same one-point extension theorem, posted two days later. Background only."
   - title: "Euclidean Ramsey theorems. I"
     authors: ["Paul Erdős", "Ronald L. Graham", "Peter Montgomery", "Bruce L. Rothschild", "Joel Spencer", "Ernst G. Straus"]
     id: "doi:10.1016/0097-3165(73)90011-3"
     type: "paper"
     relationship: "background"
-    author_endorsement: "n/a"
+    author_endorsement: "not-contacted"
     note: >-
       Journal of Combinatorial Theory, Series A 14 (1973) 341-363. Defines Euclidean Ramsey sets,
-      proves that every Ramsey set is spherical, and conjectures the converse. Background only.
+      proves that every Ramsey set is spherical, and asks whether the converse holds. Background only.
   - title: "Recent trends in Euclidean Ramsey theory"
     authors: ["Ronald L. Graham"]
     id: "doi:10.1016/0012-365X(94)00110-5"
@@ -149,20 +192,23 @@ related_formalizations: []
 
 status:
   scope: >-
-    Eleven compared declarations over ten compared definitions restated from the source's challenge
-    file. Unconditional: the tensor criterion for six concyclic points, for at most six concyclic
-    points, for at most six spherical points that affinely span their space, for at most five
-    spherical points in any dimension, and for every spherical set with algebraic coordinates; the
-    criterion implies sphericity; for algebraic coordinates the criterion is sphericity. Conditional
-    on the classification's sufficiency half, taken as an explicit hypothesis: every spherical set of
-    at most six points is Ramsey (any dimension, any affine span), every set of at most six circle
-    points is Ramsey, every spanning spherical set with algebraic coordinates is Ramsey; conditional
-    on both halves, a spanning set with algebraic coordinates is Ramsey if and only if it is
-    spherical. Not claimed: the classification; any Ramsey statement for seven or more points; the
-    criterion for six non-spanning spherical points outside the plane; the failure of the criterion
-    for the heptagon in Lean (on paper and by an exact checker in note/). The intentional
-    placeholders of Challenge.lean are excluded from proof counts; Solution.lean does not import
-    Challenge.lean.
+    Fourteen compared theorems over ten compared definitions restated from the source's challenge
+    file. Unconditional: the tensor criterion for six concyclic points, for at most six
+    concyclic points, for every spherical set of at most m + 4 points where m is the dimension of its
+    affine span (in its own space and field), for at most six spherical points in any dimension with
+    any affine span, for at most six spherical points that affinely span their space, for at most
+    five spherical points in any dimension, and for every spherical set with algebraic coordinates;
+    the criterion implies sphericity; for algebraic coordinates the criterion is sphericity.
+    Conditional on the classification's sufficiency half, taken as an explicit hypothesis: every
+    spherical set of at most six points is Ramsey (any dimension, any affine span), every set of at
+    most six circle points is Ramsey, every spherical set of at most m + 4 points is Ramsey, every
+    spanning spherical set with algebraic coordinates is Ramsey; conditional on both halves, a
+    spanning set with algebraic coordinates is Ramsey if and only if it is spherical. Not claimed:
+    the classification; the criterion or the Ramsey property for arbitrary spherical sets of more
+    than m + 4 points; the failure of the criterion for the heptagon in Lean, and hence the sharpness
+    of the dimension bound (both on paper, the former also by an exact checker in note/). The
+    intentional placeholders of Challenge.lean are excluded from proof counts; Solution.lean does not
+    import Challenge.lean.
   sorry_count: 0
   sorry_in_definitions: 0
   axioms: ["propext", "Classical.choice", "Quot.sound"]
@@ -222,22 +268,40 @@ status:
       sorry_count: 0
       axioms: ["propext", "Classical.choice", "Quot.sound"]
       comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.spherical_fieldCriterion_of_card_le_finrank_add_four"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.at_most_six_spherical_fieldCriterion"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
+    - declaration: "SixConcyclic.spherical_ramsey_of_sufficiency_of_card_le_finrank_add_four"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: ["propext", "Classical.choice", "Quot.sound"]
+      comparator_config: "comparator.json"
 
 automation:
   methods:
     - method: "agent"
-      models: ["Claude (Anthropic)"]
+      models: ["Claude (Anthropic)", "GPT (OpenAI)"]
       framework: "Claude Code with parallel subagents"
       tool_setup: >-
-        The project was directed by its author. Claude (Anthropic) was used throughout; the theorems, their
-        proofs, the searches and the checkers arose in that process, and the repository was written by Claude. Lean v4.35.0-rc2 and Mathlib
+        The project was directed by its author. Claude (Anthropic) was used throughout; the theorems and their
+        proofs, the searches and the checkers arose in that process, and the repository was written by Claude,
+        with one exception: a GPT model (OpenAI), consulted on the eleven-theorem version of the repository,
+        proposed the statement of the dimension theorem with an outline of its proof, and found two inaccurate
+        documentation sentences; the Lean proof of that theorem was written with Claude. Lean v4.35.0-rc2 and Mathlib
         v4.35.0-rc2 (commit 065356127b1dc0016f66b7283ce0ce2c4055aa55) are pinned by the committed manifest
         and lake update is never run; there are no GitHub Actions workflows. There is no native_decide and
         no enumeration beyond fin_cases over Fin 2, Fin 3 and Fin 6 and one interval_cases: the six-point
         certificate is a set of polynomial identities closed by ring, field_simp and linear_combination in
-        an abstract field, the lifts are matrix algebra over the tensor ring, arithmetic side goals use
-        linarith, nlinarith and omega, and decide is used only for inequalities between literal elements
-        of Fin 6.
+        an abstract field, the lifts are matrix algebra over the tensor ring and over R tensor R, the
+        rank argument is finite-dimensional linear algebra over R, arithmetic side goals use linarith,
+        nlinarith and omega, and decide is used only for inequalities between literal elements of Fin 6.
   spend_usd: "not tracked"
   notes: "See DISCLOSURE.md."
 
@@ -249,10 +313,12 @@ fidelity:
     IsAlgebraic Q (a i j) for every i and j. The hypotheses hsuff and hclass are the sufficiency half
     and the full statement of the source's Theorem 1.1 with its hypotheses (at least two points,
     positive dimension, injective, affine span the whole space); nothing about them is proved. The
-    Ramsey theorems for at most six spherical points carry no spanning hypothesis and allow the empty
-    and the one-point configuration, which the source's circle corollary excludes with 0 < s; the
+    Ramsey theorems for at most six and for at most m + 4 spherical points carry no spanning hypothesis
+    and allow the empty and the one-point configuration, which the source's circle corollary excludes
+    with 0 < s; the
     algebraic Ramsey theorems carry the hypotheses of Theorem 1.1 because no congruent algebraic
-    spanning representative is constructed.
+    spanning representative is constructed. The dimension of the affine span is stated as
+    Module.finrank R (vectorSpan R (Set.range a)), the direction of affineSpan R (Set.range a).
 
 review:
   status: "self-assessed"
@@ -324,8 +390,27 @@ alignment:
       module: "Solution"
       status: "proved"
       note: "Given hclass, a spanning set with algebraic coordinates is Ramsey if and only if it is spherical."
+    - source: "This development; the source's Proposition 7.3 is the branch of independent rows, the six-point certificate and the extension lemma the other"
+      lean: "SixConcyclic.spherical_fieldCriterion_of_card_le_finrank_add_four"
+      module: "Solution"
+      status: "proved"
+      note: >-
+        Every spherical set of at most m + 4 distinct points, m the dimension of its affine span,
+        satisfies FieldCriterion in its own space and coordinate field. That m + 5 points can fail for m
+        at least 2 (the heptagon plus m - 2 points) is shown on paper in note/, not in Lean.
+    - source: "This development; a corollary of the dimension theorem"
+      lean: "SixConcyclic.at_most_six_spherical_fieldCriterion"
+      module: "Solution"
+      status: "proved"
+      note: "Every spherical set of at most six distinct points satisfies FieldCriterion, in any dimension and with any affine span."
+    - source: "This development, conditional on the sufficiency half of the source's Theorem 1.1"
+      lean: "SixConcyclic.spherical_ramsey_of_sufficiency_of_card_le_finrank_add_four"
+      module: "Solution"
+      status: "proved"
+      note: "Given hsuff, every spherical set of at most m + 4 distinct points, m the dimension of its affine span, is Ramsey."
 
 acknowledgements: >-
   The classification paper for the criterion and its definitions; the heptagon paper for the
-  seven-point set; Lean, Mathlib, Comparator, lean4export, NanoDa, and the Palomar policy and
-  verifier projects. AI assistance is disclosed above and in DISCLOSURE.md.
+  seven-point set; the one-point extension papers of 2026 for the question the extension lemma
+  mirrors; Lean, Mathlib, Comparator, lean4export, NanoDa, and the Palomar policy and verifier
+  projects. AI assistance is disclosed above and in DISCLOSURE.md.

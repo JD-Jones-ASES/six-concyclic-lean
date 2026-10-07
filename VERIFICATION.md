@@ -53,8 +53,9 @@ character, with `scripts/EuclideanRamsey.oai.lean`, a copy of OpenAI's challenge
 Lean `v4.35.0-rc2` and Mathlib `v4.35.0-rc2` (commit `065356127b1dc0016f66b7283ce0ce2c4055aa55`) are pinned by
 the committed manifest; `lake update` is never run. Every file of the `SixConcyclic`, `Challenge` and `Solution`
 libraries carries a `module` header; the two `Test` files are plain files for the reason above. A build from an
-empty `.lake/build` after `lake exe cache get`, one target at a time, takes about three and a half minutes
-(212 s for the sixteen targets) on a 16-core, 16 GB PC; each module takes 10–16 s, most of it the Mathlib import.
+empty `.lake/build` after `lake exe cache get`, one target at a time, takes about four minutes (232 s for the
+sixteen targets) on a 16-core, 16 GB PC; each development module takes 8–16 s, most of it the Mathlib import, and
+the Challenge, which imports all of Mathlib, about a minute.
 
 ## The finite computations
 
